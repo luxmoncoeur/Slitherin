@@ -41,15 +41,17 @@ body {
 
 h1 {
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(1.4rem, 5vw, 2.8rem);
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   text-transform: uppercase;
   letter-spacing: 4px;
   margin: 0 0 20px 0;
   color: #fff;
   text-shadow:
-    0 0 5px #fff,
-    0 0 10px var(--neon-pink),
-    0 0 20px var(--neon-pink);
+    0 0 4px #fff,
+    0 0 8px var(--neon-pink);
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
 }
 
 .game-board {
@@ -98,9 +100,9 @@ h1 {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(10, 10, 18, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(10, 10, 18, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,7 +130,7 @@ h1 {
   color: var(--neon-pink);
   font-size: clamp(1.5rem, 6vw, 3rem);
   margin: 0 0 20px 0;
-  text-shadow: 0 0 12px var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink);
   line-height: 1.4;
 }
 
