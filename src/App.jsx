@@ -102,11 +102,7 @@ function App() {
   }, [direction, food, gameOver, highScore]);
 
   return (
-    <div
-      className="app-container"
-      {...swipeHandlers}
-      onClick={gameOver ? resetGame : undefined}
-    >
+    <div className="app-container" {...swipeHandlers}>
       <h1>Slitherin</h1>
 
       <div className="score-container">
@@ -141,7 +137,7 @@ function App() {
         })}
       </div>
       {gameOver && (
-        <div className="game-over-overlay">
+        <div className="game-over-overlay" onClick={resetGame}>
           <div className="game-over-panel">
             <h2 className="game-over-title">GAME OVER</h2>
             <p className="game-over-subtitle">
