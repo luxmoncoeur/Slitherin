@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+:root {
+  --bg-dark: #0a0a12;
+  --panel-bg: #121225;
+  --grid-bg: rgba(16, 18, 27, 0.7);
+  --neon-pink: #ff007f;
+  --neon-cyan: #00f0ff;
+  --text-main: #e2e8f0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  background-image:
+    linear-gradient(rgba(255, 0, 127, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 127, 0.03) 1px, transparent 1px);
+  background-size: 30px, 30px;
+  color: var(--text-main);
+  font-family: "Press Start 2P", monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #0d001a, #001a33, #1a001a, #050b14);
+  background-size: 400% 400%;
+  animation: gradient-flow 18s ease infinite;
+}
+
+h1 {
+  font-family: "Press Start 2P", monospace;
+  font-size: 2.8rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin: 0 0 20px 0;
+  color: #fff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px var(--neon-pink),
+    0 0 20px var(--neon-pink);
+}
+
+.game-board {
+  display: grid;
+  width: 400px;
+  height: 400px;
+  background-color: var(--grid-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 3px solid var(--neon-pink);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+  overflow: hidden;
+}
+
+.cell {
+  border: 1px solid rgba(147, 51, 234, 0.08);
+}
+
+.snake {
+  background-color: var(--neon-cyan) !important;
+  border-radius: 4px;
+  box-shadow:
+    0 0 8px var(--neon-cyan),
+    inset 0 0 2px #fff;
+}
+
+.food {
+  background-color: var(--neon-pink) !important;
+  border-radius: 50%;
+  box-shadow:
+    0 0 10px var(--neon-pink),
+    inset 0 0 4px #fff;
+  animation: pulse 1s infinite alternate;
+}
+.game-over-panel {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.game-over-panel p {
+  color: var(--neon-pink);
+  font-size: 1.2rem;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 8px var(--neon-pink);
+}
+
+.game-over-panel button {
+  font-family: "Press Start 2P", monospace;
+  background: transparent;
+  color: var(--neon-cyan);
+  border: 2px solid var(--neon-cyan);
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.game-over-panel button:hover {
+  background: var(--neon-cyan);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+.score-container {
+  display: flex;
+  justify-content: space-between;
+  width: 400px; /* Kapareho ng lapad ng game board mo */
+  margin-bottom: 20px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.score-box {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.high-score {
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
