@@ -22,15 +22,15 @@ export function swipeLogic(direction, setDirection) {
 
     if (Math.abs(distanceX) > Math.abs(distanceY)) {
       if (Math.abs(distanceX) > minSwipe) {
-        if (distanceX > 0 && direction != "LEFT") setDirection("RIGHT");
-        if (distanceX < 0 && direction !== "RIGHT") setDirection("LEFT");
+        if (distanceX > 0 && direction.x !== -1) setDirection({ x: 1, y: 0 }); // Pakanan
+        if (distanceX < 0 && direction.x !== 1) setDirection({ x: -1, y: 0 }); // Pakaliwa
         resetTouch();
-      } else {
-        if (Math.abs(distanceY) > minSwipe) {
-          if (distanceY > 0 && direction !== "UP") setDirection("DOWN");
-          if (distanceY < 0 && direction !== "DOWN") setDirection("UP");
-          resetTouch();
-        }
+      }
+    } else {
+      if (Math.abs(distanceY) > minSwipe) {
+        if (distanceY > 0 && direction.y !== -1) setDirection({ x: 0, y: 1 }); // Pababa
+        if (distanceY < 0 && direction.y !== 1) setDirection({ x: 0, y: -1 }); // Pataas
+        resetTouch();
       }
     }
   };
