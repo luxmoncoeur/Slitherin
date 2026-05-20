@@ -21,9 +21,10 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
-.game-container {
+.app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,11 +36,12 @@ body {
   background: linear-gradient(-45deg, #0d001a, #001a33, #1a001a, #050b14);
   background-size: 400% 400%;
   animation: gradient-flow 18s ease infinite;
+  touch-action: none;
 }
 
 h1 {
   font-family: "Press Start 2P", monospace;
-  font-size: 2.8rem;
+  font-size: clamp(1.4rem, 5vw, 2.8rem);
   text-transform: uppercase;
   letter-spacing: 4px;
   margin: 0 0 20px 0;
@@ -52,8 +54,8 @@ h1 {
 
 .game-board {
   display: grid;
-  width: 400px;
-  height: 400px;
+  width: clamp(280px, 85vmin, 400px);
+  height: clamp(280px, 85vmin, 400px);
   background-color: var(--grid-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -67,12 +69,18 @@ h1 {
   border: 1px solid rgba(147, 51, 234, 0.08);
 }
 
-.snake {
-  background-color: var(--neon-cyan) !important;
+.snake-head {
+  background-color: #fff !important;
   border-radius: 4px;
   box-shadow:
-    0 0 8px var(--neon-cyan),
-    inset 0 0 2px #fff;
+    0 0 12px #fff,
+    0 0 20px var(--neon-cyan);
+}
+
+.snake-body {
+  background-color: var(--neon-cyan) !important;
+  border-radius: 4px;
+  box-shadow: 0 0 8px var(--neon-cyan);
 }
 
 .food {
@@ -83,9 +91,30 @@ h1 {
     inset 0 0 4px #fff;
   animation: pulse 1s infinite alternate;
 }
+
+.game-over-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 18, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
 .game-over-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin-bottom: 15px;
+  padding: 20px;
+  max-width: 90%;
 }
 
 .game-over-panel p {
@@ -93,6 +122,21 @@ h1 {
   font-size: 1.2rem;
   margin: 0 0 10px 0;
   text-shadow: 0 0 8px var(--neon-pink);
+}
+
+.game-over-title {
+  color: var(--neon-pink);
+  font-size: clamp(1.5rem, 6vw, 3rem);
+  margin: 0 0 20px 0;
+  text-shadow: 0 0 12px var(--neon-pink);
+  line-height: 1.4;
+}
+
+.game-over-subtitle {
+  color: #888;
+  font-size: clamp(0.55rem, 2.5vw, 0.85rem);
+  line-height: 1.8;
+  margin: 0;
 }
 
 .game-over-panel button {
@@ -116,10 +160,11 @@ h1 {
 .score-container {
   display: flex;
   justify-content: space-between;
-  width: 400px; /* Kapareho ng lapad ng game board mo */
+  width: 100%;
+  max-width: clamp(280px, 85vmin, 400px);
   margin-bottom: 20px;
   font-family: "Press Start 2P", monospace;
-  font-size: 0.75rem;
+  font-size: clamp(0.5rem, 2.5vw, 0.75rem);
   letter-spacing: 1px;
 }
 
