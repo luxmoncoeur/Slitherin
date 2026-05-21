@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { getNextDirection, GRID_SIZE, renderBoard } from "./gameLogic";
-import { INITIAL_SNAKE, moveSnake, checkSelfCollision } from "./snakeLogic";
-import { swipeLogic } from "./swipeLogic";
+
+import { getNextDirection, GRID_SIZE } from "./utils/gameLogic";
+import {
+  INITIAL_SNAKE,
+  moveSnake,
+  checkSelfCollision,
+} from "./utils/snakeLogic";
+import { swipeLogic } from "./hooks/swipeLogic";
+
+import ScoreBoard from "./components/ScoreBoard";
+import GameBoard from "./components/GameBoard";
+import GameOver from "./components/GameOver";
 
 function App() {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [direction, setDirection] = useState({ x: 1, y: 0 });
-
   const [food, setFood] = useState({ x: 5, y: 5 });
   const [gameOver, setGameOver] = useState(false);
-
   const [score, setScore] = useState(0);
 
   const [highScore, setHighScore] = useState(() => {
@@ -22,8 +29,8 @@ function App() {
 
   const generateFood = () => {
     const newFood = {
-      x: Math.floor(Math.random() * GRID_SIZE),
-      y: Math.floor(Math.random() * GRID_SIZE),
+      x: Math.floor(Math.random() * 20),
+      y: Math.floor(Math.random() * 20),
     };
     setFood(newFood);
   };
@@ -65,12 +72,7 @@ function App() {
         );
 
         const head = updatedSnake[0];
-        if (
-          head.x < 0 ||
-          head.x >= GRID_SIZE ||
-          head.y < 0 ||
-          head.y >= GRID_SIZE
-        ) {
+        if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
           setGameOver(true);
           return currentSnake;
         }
@@ -95,58 +97,20 @@ function App() {
     };
 
     const intervalId = setInterval(handleTick, 150);
-
-    return () => {
-      clearInterval(intervalId);
-    };
+    return () => clearInterval(intervalId);
   }, [direction, food, gameOver, highScore]);
 
   return (
     <div className="app-container" {...swipeHandlers}>
       <h1>Slitherin</h1>
 
-      <div className="score-container">
-        <div className="score-box">
-          SCORE: <span className="neon-text-cyan">{score}</span>
-        </div>
-        <div className="score-box">
-          HIGH SCORE: <span className="neon-text-pink">{highScore}</span>
-        </div>
-      </div>
+      <ScoreBoard score={score} highScore={highScore} />
 
-      <div
-        className="game-board"
-        style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)` }}
-      >
-        {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, index) => {
-          const x = index % GRID_SIZE;
-          const y = Math.floor(index / GRID_SIZE);
+      <GameBoard snake={snake} food={food} />
 
-          const isSnake = snake.some(
-            (segment) => segment.x === x && segment.y === y,
-          );
-          const isSnakeHead = snake[0] && snake[0].x === x && snake[0].y === y;
-          const isFood = food.x === x && food.y === y;
-
-          return (
-            <div
-              key={index}
-              className={`cell ${isSnakeHead ? "snake-head" : isSnake ? "snake-body" : isFood ? "food" : ""}`}
-            />
-          );
-        })}
-      </div>
-      {gameOver && (
-        <div className="game-over-overlay" onClick={resetGame}>
-          <div className="game-over-panel">
-            <h2 className="game-over-title">GAME OVER</h2>
-            <p className="game-over-subtitle">
-              Tap anywhere or Press Space to Restart
-            </p>
-          </div>
-        </div>
-      )}
+      {gameOver && <GameOver resetGame={resetGame} />}
     </div>
   );
 }
+
 export default App;
